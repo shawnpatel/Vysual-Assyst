@@ -9,21 +9,21 @@
 /* Begin PBXBuildFile section */
 		CA760F7621C768BF00A75457 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA760F7521C768BF00A75457 /* AppDelegate.swift */; };
 		CA760F7821C768BF00A75457 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA760F7721C768BF00A75457 /* HomeViewController.swift */; };
-		CA760F7A21C768BF00A75457 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA760F7921C768BF00A75457 /* SecondViewController.swift */; };
 		CA760F7D21C768BF00A75457 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA760F7B21C768BF00A75457 /* Main.storyboard */; };
 		CA760F7F21C768C200A75457 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA760F7E21C768C200A75457 /* Assets.xcassets */; };
 		CA760F8221C768C200A75457 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA760F8021C768C200A75457 /* LaunchScreen.storyboard */; };
+		CADD345521CBFB0D00633BF0 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADD345421CBFB0D00633BF0 /* SettingsTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		CA760F7221C768BF00A75457 /* Vysual Assyst.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Vysual Assyst.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA760F7521C768BF00A75457 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CA760F7721C768BF00A75457 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		CA760F7921C768BF00A75457 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		CA760F7C21C768BF00A75457 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CA760F7E21C768C200A75457 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA760F8121C768C200A75457 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CA760F8321C768C200A75457 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CADD345421CBFB0D00633BF0 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,7 +58,7 @@
 			children = (
 				CA760F7521C768BF00A75457 /* AppDelegate.swift */,
 				CA760F7721C768BF00A75457 /* HomeViewController.swift */,
-				CA760F7921C768BF00A75457 /* SecondViewController.swift */,
+				CADD345421CBFB0D00633BF0 /* SettingsTableViewController.swift */,
 				CA760F7B21C768BF00A75457 /* Main.storyboard */,
 				CA760F7E21C768C200A75457 /* Assets.xcassets */,
 				CA760F8021C768C200A75457 /* LaunchScreen.storyboard */,
@@ -138,9 +138,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CA760F7A21C768BF00A75457 /* SecondViewController.swift in Sources */,
 				CA760F7621C768BF00A75457 /* AppDelegate.swift in Sources */,
 				CA760F7821C768BF00A75457 /* HomeViewController.swift in Sources */,
+				CADD345521CBFB0D00633BF0 /* SettingsTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

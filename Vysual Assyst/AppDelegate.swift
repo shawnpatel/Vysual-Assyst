@@ -12,10 +12,25 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    
+    var firstLaunch = true
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        if let checkFirstLaunch = UserDefaults.standard.object(forKey: "isFirstLaunch") as? Bool {
+            firstLaunch = checkFirstLaunch
+        }
+        
+        if firstLaunch {
+            UserDefaults.standard.set(1.0, forKey: "distanceAlert")
+            UserDefaults.standard.set(true, forKey: "haptics")
+            UserDefaults.standard.set(false, forKey: "sound")
+            
+            firstLaunch = false
+            UserDefaults.standard.set(firstLaunch, forKey: "isFirstLaunch")
+        }
+        
         return true
     }
 
