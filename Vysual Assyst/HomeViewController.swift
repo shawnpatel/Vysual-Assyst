@@ -10,14 +10,17 @@ import UIKit
 import ARKit
 import CoreML
 import Vision
+import AVFoundation
 import AudioToolbox
 
 class HomeViewController: UIViewController {
     
     @IBOutlet weak var sceneView: ARSCNView!
     
-    var timer: Timer!
     var initialLoad: Bool!
+    
+    var timer: Timer!
+    var player: AVAudioPlayer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +43,7 @@ class HomeViewController: UIViewController {
         sceneView.session.run(configuration, options: .resetTracking)
         
         // Initiate Timer to Update Distance
-        timer = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(updateDistance), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(verifyDistance), userInfo: nil, repeats: true)
     }
     
     @objc func detectDistance(sender: UITapGestureRecognizer) {
@@ -65,18 +68,56 @@ class HomeViewController: UIViewController {
         
     }
     
-    @objc func updateDistance() {
+    @objc func verifyDistance() {
         let distance = getDistance()
+        let maxDistance = UserDefaults.standard.float(forKey: "distanceAlert")
         
-        if distance <= 1 && distance >= 0 {
-            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+        if distance <= maxDistance && distance >= 0 {
+            let feedbackSupportLevel: Int = UIDevice.current.value(forKey: "_feedbackSupportLevel") as! Int
+            
+            if feedbackSupportLevel == 0 {
+                // <= iPhone 6
+                
+                if UserDefaults.standard.bool(forKey: "haptics") {
+                    AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+                }
+            } else if feedbackSupportLevel == 1 {
+                // = iPhone 6s
+                
+                if UserDefaults.standard.bool(forKey: "haptics") {
+                    AudioServicesPlaySystemSound(1520)
+                }
+            } else if feedbackSupportLevel == 2 {
+                // >= iPhone 7
+                
+                if UserDefaults.standard.bool(forKey: "haptics") {
+                    let impactGenerator = UIImpactFeedbackGenerator(style: .medium)
+                    impactGenerator.prepare()
+                    impactGenerator.impactOccurred()
+                }
+            }
+            
+            if UserDefaults.standard.bool(forKey: "sound") {
+                guard let path = Bundle.main.path(forResource: "Short_Beep", ofType: "m4a") else {
+                    print("File does not exist.")
+                    return
+                }
+                let url = URL(fileURLWithPath: path)
+                
+                do {
+                    player = try AVAudioPlayer(contentsOf: url)
+                    player?.play()
+                } catch let error {
+                    print(error.localizedDescription)
+                }
+            }
         }
     }
     
-    func getDistance() -> Double {
+    func getDistance() -> Float {
         let hitTest = sceneView.hitTest(CGPoint(x: 0.5, y: 0.5), types: [.existingPlaneUsingExtent, .featurePoint])
         if let distance = hitTest.first?.distance {
-            let roundedDistance = Double(round(100 * (distance * 3.28084)) / 100)
+            let roundedDistance = Float(round(100 * (distance * 3.28084)) / 100)
             
             return roundedDistance
         } else {

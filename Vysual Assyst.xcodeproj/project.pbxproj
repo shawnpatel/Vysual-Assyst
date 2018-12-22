@@ -12,6 +12,8 @@
 		CA760F7D21C768BF00A75457 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA760F7B21C768BF00A75457 /* Main.storyboard */; };
 		CA760F7F21C768C200A75457 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA760F7E21C768C200A75457 /* Assets.xcassets */; };
 		CA760F8221C768C200A75457 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA760F8021C768C200A75457 /* LaunchScreen.storyboard */; };
+		CAC1F9D521CDB4ED0053BAD0 /* Beep.m4a in Resources */ = {isa = PBXBuildFile; fileRef = CAC1F9D421CDB4EC0053BAD0 /* Beep.m4a */; };
+		CAC1F9D821CDB7630053BAD0 /* Short_Beep.m4a in Resources */ = {isa = PBXBuildFile; fileRef = CAC1F9D721CDB7630053BAD0 /* Short_Beep.m4a */; };
 		CADD345521CBFB0D00633BF0 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADD345421CBFB0D00633BF0 /* SettingsTableViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +25,8 @@
 		CA760F7E21C768C200A75457 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA760F8121C768C200A75457 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CA760F8321C768C200A75457 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CAC1F9D421CDB4EC0053BAD0 /* Beep.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Beep.m4a; sourceTree = "<group>"; };
+		CAC1F9D721CDB7630053BAD0 /* Short_Beep.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Short_Beep.m4a; sourceTree = "<group>"; };
 		CADD345421CBFB0D00633BF0 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -61,10 +65,20 @@
 				CADD345421CBFB0D00633BF0 /* SettingsTableViewController.swift */,
 				CA760F7B21C768BF00A75457 /* Main.storyboard */,
 				CA760F7E21C768C200A75457 /* Assets.xcassets */,
+				CAC1F9D621CDB4F40053BAD0 /* Sounds */,
 				CA760F8021C768C200A75457 /* LaunchScreen.storyboard */,
 				CA760F8321C768C200A75457 /* Info.plist */,
 			);
 			path = "Vysual Assyst";
+			sourceTree = "<group>";
+		};
+		CAC1F9D621CDB4F40053BAD0 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				CAC1F9D721CDB7630053BAD0 /* Short_Beep.m4a */,
+				CAC1F9D421CDB4EC0053BAD0 /* Beep.m4a */,
+			);
+			name = Sounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,7 +139,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAC1F9D521CDB4ED0053BAD0 /* Beep.m4a in Resources */,
 				CA760F8221C768C200A75457 /* LaunchScreen.storyboard in Resources */,
+				CAC1F9D821CDB7630053BAD0 /* Short_Beep.m4a in Resources */,
 				CA760F7F21C768C200A75457 /* Assets.xcassets in Resources */,
 				CA760F7D21C768BF00A75457 /* Main.storyboard in Resources */,
 			);
