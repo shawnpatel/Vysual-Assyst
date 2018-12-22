@@ -52,13 +52,18 @@ class HomeViewController: UIViewController {
         timer = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(verifyDistance), userInfo: nil, repeats: true)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        sceneView.session.pause()
+        timer.invalidate()
+    }
+    
     @objc func detectDistance(sender: UITapGestureRecognizer) {
         let distance = getDistance()
         
         if distance != -1 {
             speak(text: String(distance))
-            print(distance)
-            
         } else {
             AudioServicesPlaySystemSound(1521)
         }

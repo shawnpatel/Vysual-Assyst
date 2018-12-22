@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AVFoundation
+import AudioToolbox
 
 class SettingsSliderUITableViewCell: UITableViewCell {
     @IBOutlet weak var sliderName: UILabel!
@@ -22,6 +24,8 @@ class SettingsSwitchUITableViewCell: UITableViewCell {
 class SettingsTableViewController: UITableViewController {
     
     @IBOutlet var settingsTableView: UITableView!
+    
+    var player: AVAudioPlayer?
     
     var settingsOptionsType: [String]!
     var settingsOptionsName: [String]!
@@ -70,6 +74,7 @@ class SettingsTableViewController: UITableViewController {
         } else if settingsOptionsType[indexPath.row] == "Switch" {
             let cell = tableView.dequeueReusableCell(withIdentifier: "SwitchUI", for: indexPath) as! SettingsSwitchUITableViewCell
             cell.switch.tag = indexPath.row
+            cell.switch.onTintColor = UIColor(red: 254/256, green: 200/256, blue: 8/256, alpha: 1)
             cell.switchName.text = settingsOptionsName[indexPath.row]
             
             if settingsOptionsName[indexPath.row] == "Haptics" {
@@ -98,8 +103,43 @@ class SettingsTableViewController: UITableViewController {
     @objc func switchValueChanged(sender: UISwitch) {
         if sender.tag == 1 {
             UserDefaults.standard.set(sender.isOn, forKey: "haptics")
+            
+            if sender.isOn == true {
+                playHaptics()
+            }
         } else if sender.tag == 2 {
             UserDefaults.standard.set(sender.isOn, forKey: "sound")
+            
+            if sender.isOn == true {
+                playSound()
+            }
+        }
+    }
+    
+    func playHaptics() {
+        let feedbackSupportLevel: Int = UIDevice.current.value(forKey: "_feedbackSupportLevel") as! Int
+        
+        if feedbackSupportLevel == 0 {
+            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+        } else if feedbackSupportLevel >= 1 {
+            AudioServicesPlaySystemSound(1519)
+        }
+    }
+    
+    func playSound() {
+        guard let path = Bundle.main.path(forResource: "Short_Beep", ofType: "m4a") else {
+            print("File does not exist.")
+            return
+        }
+        let url = URL(fileURLWithPath: path)
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: .mixWithOthers)
+            
+            player = try AVAudioPlayer(contentsOf: url)
+            player?.play()
+        } catch let error {
+            print(error.localizedDescription)
         }
     }
 }
