@@ -18,6 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        implementTheme()
+        
         if let checkFirstLaunch = UserDefaults.standard.object(forKey: "isFirstLaunch") as? Bool {
             firstLaunch = checkFirstLaunch
         }
@@ -56,6 +58,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-
+    func implementTheme() {
+        UINavigationBar.appearance().barTintColor = UIColor(red: 254/256, green: 200/256, blue: 8/256, alpha: 1)
+        
+        UITabBar.appearance().barTintColor = UIColor(red: 254/256, green: 200/256, blue: 8/256, alpha: 1)
+        UITabBar.appearance().tintColor = UIColor.black
+        UITabBar.appearance().unselectedItemTintColor = UIColor.gray
+    }
 }
 

@@ -63,10 +63,10 @@
 				CA760F7521C768BF00A75457 /* AppDelegate.swift */,
 				CA760F7721C768BF00A75457 /* HomeViewController.swift */,
 				CADD345421CBFB0D00633BF0 /* SettingsTableViewController.swift */,
+				CA760F8021C768C200A75457 /* LaunchScreen.storyboard */,
 				CA760F7B21C768BF00A75457 /* Main.storyboard */,
 				CA760F7E21C768C200A75457 /* Assets.xcassets */,
 				CAC1F9D621CDB4F40053BAD0 /* Sounds */,
-				CA760F8021C768C200A75457 /* LaunchScreen.storyboard */,
 				CA760F8321C768C200A75457 /* Info.plist */,
 			);
 			path = "Vysual Assyst";
