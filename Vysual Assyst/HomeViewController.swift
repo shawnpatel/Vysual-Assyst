@@ -16,6 +16,8 @@ import AudioToolbox
 class HomeViewController: UIViewController {
     
     @IBOutlet weak var sceneView: ARSCNView!
+    @IBOutlet weak var object: UILabel!
+    @IBOutlet weak var distance: UILabel!
     
     let synth = AVSpeechSynthesizer()
     
@@ -59,17 +61,62 @@ class HomeViewController: UIViewController {
             
         } else {
             AudioServicesPlaySystemSound(1521)
-            print("Error")
         }
     }
     
     @objc func detectObject(sender: UILongPressGestureRecognizer) {
+        let image = sceneView.snapshot()
         
+        if sender.state == UIGestureRecognizer.State.began {
+            analyze(image: image)
+        }
+    }
+    
+    func analyze(image: UIImage) {
+        guard let model = try? VNCoreMLModel(for: MobileNet().model) else {
+            fatalError("Can't load MobileNet model.")
+        }
+        
+        let request = VNCoreMLRequest(model: model) { [weak self] request, error in
+            guard let results = request.results as? [VNClassificationObservation], let topResult = results.first else {
+                fatalError("Unexpected result type from VNCoreMLRequest.")
+            }
+            
+            DispatchQueue.main.async { [weak self] in
+                let items = topResult.identifier.components(separatedBy: ", ")
+                let item = items[0].capitalized
+                
+                self?.speak(text: item)
+                
+                self?.object.text = item
+                self?.object.isHidden = false
+            }
+        }
+        
+        let handler = VNImageRequestHandler(ciImage: CIImage(image: image)!)
+        DispatchQueue.global(qos: .userInteractive).async {
+            do {
+                try handler.perform([request])
+            } catch {
+                print(error)
+            }
+        }
     }
     
     @objc func verifyDistance() {
         let distance = getDistance()
         let maxDistance = UserDefaults.standard.float(forKey: "distanceAlert")
+        
+        if distance != -1 {
+            DispatchQueue.main.async {
+                self.distance.text = String(distance) + " ft"
+                self.distance.isHidden = false
+            }
+        } else {
+            DispatchQueue.main.async {
+                self.distance.text = "Error"
+            }
+        }
         
         if distance <= maxDistance && distance >= 0 {
             let feedbackSupportLevel: Int = UIDevice.current.value(forKey: "_feedbackSupportLevel") as! Int
@@ -112,8 +159,6 @@ class HomeViewController: UIViewController {
                     print(error.localizedDescription)
                 }
             }
-        } else if distance == -1 {
-            
         }
     }
     
