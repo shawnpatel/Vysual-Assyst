@@ -122,17 +122,17 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="p80-P2-hSw">
-                                                    <rect key="frame" x="56.666666666666671" y="0.0" width="198.33333333333331" height="40.666666666666664"/>
+                                                    <rect key="frame" x="56.666666666666671" y="0.0" width="206.66666666666663" height="40.666666666666664"/>
                                                 </slider>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Value" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ynM-1b-LbI">
-                                                    <rect key="frame" x="268" y="0.0" width="57" height="39.666666666666664"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Value" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="ynM-1b-LbI">
+                                                    <rect key="frame" x="276.33333333333331" y="0.0" width="48.666666666666686" height="39.666666666666664"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="ynM-1b-LbI" firstAttribute="width" secondItem="dVO-sb-9Rp" secondAttribute="width" multiplier="0.175" id="nAM-sy-hrh"/>
+                                                <constraint firstItem="ynM-1b-LbI" firstAttribute="width" secondItem="dVO-sb-9Rp" secondAttribute="width" multiplier="0.15" id="nAM-sy-hrh"/>
                                             </constraints>
                                         </stackView>
                                     </subviews>

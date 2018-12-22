@@ -17,15 +17,19 @@ class HomeViewController: UIViewController {
     
     @IBOutlet weak var sceneView: ARSCNView!
     
-    var initialLoad: Bool!
+    let synth = AVSpeechSynthesizer()
     
     var timer: Timer!
     var player: AVAudioPlayer?
     
+    var turnOffBeep: Bool!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        initialLoad = true
+        synth.delegate = self
+        
+        turnOffBeep = false
         
         // Gesture Implementation
         let shortPressRecognizer = UITapGestureRecognizer(target: self, action: #selector(detectDistance(sender:)))
@@ -50,17 +54,12 @@ class HomeViewController: UIViewController {
         let distance = getDistance()
         
         if distance != -1 {
+            speak(text: String(distance))
             print(distance)
             
-            if initialLoad {
-                initialLoad = false
-            }
         } else {
-            if initialLoad {
-                print("Move Device")
-            } else {
-                print("Error")
-            }
+            AudioServicesPlaySystemSound(1521)
+            print("Error")
         }
     }
     
@@ -97,7 +96,7 @@ class HomeViewController: UIViewController {
                 }
             }
             
-            if UserDefaults.standard.bool(forKey: "sound") {
+            if UserDefaults.standard.bool(forKey: "sound") && !turnOffBeep {
                 guard let path = Bundle.main.path(forResource: "Short_Beep", ofType: "m4a") else {
                     print("File does not exist.")
                     return
@@ -105,12 +104,16 @@ class HomeViewController: UIViewController {
                 let url = URL(fileURLWithPath: path)
                 
                 do {
+                    try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: .mixWithOthers)
+                    
                     player = try AVAudioPlayer(contentsOf: url)
                     player?.play()
                 } catch let error {
                     print(error.localizedDescription)
                 }
             }
+        } else if distance == -1 {
+            
         }
     }
     
@@ -123,5 +126,26 @@ class HomeViewController: UIViewController {
         } else {
             return -1
         }
+    }
+    
+    func speak(text: String) {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .spokenAudio, options: .duckOthers)
+        } catch let error {
+            print(error.localizedDescription)
+        }
+        
+        let utterance = AVSpeechUtterance(string: text)
+        utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+        
+        turnOffBeep = true
+        
+        synth.speak(utterance)
+    }
+}
+
+extension HomeViewController: AVSpeechSynthesizerDelegate {
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        turnOffBeep = false
     }
 }
