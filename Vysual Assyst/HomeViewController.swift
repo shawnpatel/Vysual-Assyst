@@ -29,6 +29,8 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        sceneView.autoenablesDefaultLighting = true
+        
         synth.delegate = self
         
         turnOffBeep = false
@@ -168,14 +170,44 @@ class HomeViewController: UIViewController {
     }
     
     func getDistance() -> Float {
-        let hitTest = sceneView.hitTest(CGPoint(x: 0.5, y: 0.5), types: [.existingPlaneUsingExtent, .featurePoint])
+        let hitTest = sceneView.hitTest(sceneView.center, types: [.existingPlaneUsingExtent, .featurePoint])
+        
         if let distance = hitTest.first?.distance {
             let roundedDistance = Float(round(100 * (distance * 3.28084)) / 100)
+            let hitTestCoordinates = hitTest.first?.worldTransform.columns.3
+            
+            let hitTestCoordinatesX = hitTestCoordinates?.x
+            let hitTestCoordinatesY = hitTestCoordinates?.y
+            let hitTestCoordinatesZ = hitTestCoordinates?.z
+            
+            create3DText(text: String(roundedDistance) + " ft", xPos: hitTestCoordinatesX!, yPos: hitTestCoordinatesY!, zPos: hitTestCoordinatesZ!)
             
             return roundedDistance
         } else {
+            sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
+                node.removeFromParentNode()
+            }
+            
             return -1
         }
+    }
+    
+    func create3DText(text: String, xPos: Float, yPos: Float, zPos: Float) {
+        sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
+            node.removeFromParentNode()
+        }
+        
+        let text = SCNText(string: text, extrusionDepth: 1)
+        text.font = UIFont.systemFont(ofSize: CGFloat(20 * abs(zPos)))
+        text.flatness = 0
+        text.firstMaterial?.diffuse.contents = UIColor.red
+        
+        let node = SCNNode()
+        node.position = SCNVector3(x: xPos, y: yPos, z: zPos)
+        node.scale = SCNVector3(0.005, 0.005, 0.005)
+        node.geometry = text
+        
+        sceneView.scene.rootNode.addChildNode(node)
     }
     
     func speak(text: String) {
