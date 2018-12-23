@@ -174,8 +174,8 @@ class HomeViewController: UIViewController {
         
         if let distance = hitTest.first?.distance {
             let roundedDistance = Float(round(100 * (distance * 3.28084)) / 100)
-            let hitTestCoordinates = hitTest.first?.worldTransform.columns.3
             
+            let hitTestCoordinates = hitTest.first?.worldTransform.columns.3
             let hitTestCoordinatesX = hitTestCoordinates?.x
             let hitTestCoordinatesY = hitTestCoordinates?.y
             let hitTestCoordinatesZ = hitTestCoordinates?.z
@@ -198,12 +198,12 @@ class HomeViewController: UIViewController {
         }
         
         let text = SCNText(string: text, extrusionDepth: 1)
-        text.font = UIFont.systemFont(ofSize: CGFloat(20 * abs(zPos)))
+        text.font = UIFont.systemFont(ofSize: 13)
         text.flatness = 0
         text.firstMaterial?.diffuse.contents = UIColor.red
         
         let node = SCNNode()
-        node.position = SCNVector3(x: xPos, y: yPos, z: zPos)
+        node.position = SCNVector3(x: xPos - 0.1, y: yPos, z: zPos)
         node.scale = SCNVector3(0.005, 0.005, 0.005)
         node.geometry = text
         
