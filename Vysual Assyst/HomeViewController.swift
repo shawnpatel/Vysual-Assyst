@@ -59,6 +59,8 @@ class HomeViewController: UIViewController {
         
         sceneView.session.pause()
         timer.invalidate()
+        
+        object.isHidden = true
     }
     
     @objc func detectDistance(sender: UITapGestureRecognizer) {
@@ -175,12 +177,13 @@ class HomeViewController: UIViewController {
         if let distance = hitTest.first?.distance {
             let roundedDistance = Float(round(100 * (distance * 3.28084)) / 100)
             
-            let hitTestCoordinates = hitTest.first?.worldTransform.columns.3
+            // Create 3D Text
+            /*let hitTestCoordinates = hitTest.first?.worldTransform.columns.3
             let hitTestCoordinatesX = hitTestCoordinates?.x
             let hitTestCoordinatesY = hitTestCoordinates?.y
             let hitTestCoordinatesZ = hitTestCoordinates?.z
             
-            create3DText(text: String(roundedDistance) + " ft", xPos: hitTestCoordinatesX!, yPos: hitTestCoordinatesY!, zPos: hitTestCoordinatesZ!)
+            create3DText(text: String(roundedDistance) + " ft", xPos: hitTestCoordinatesX!, yPos: hitTestCoordinatesY!, zPos: hitTestCoordinatesZ!)*/
             
             return roundedDistance
         } else {

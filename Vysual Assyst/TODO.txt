@@ -1,0 +1,3 @@
+- Reset AR tracking when device rotates.
+- Figure out better UI for displaying object recognition text.
+- Tutorial screens.

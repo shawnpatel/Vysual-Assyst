@@ -60,6 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func implementTheme() {
         UINavigationBar.appearance().barTintColor = UIColor(red: 254/256, green: 200/256, blue: 8/256, alpha: 1)
+        UIBarButtonItem.appearance().tintColor = UIColor.gray
         
         UITabBar.appearance().barTintColor = UIColor(red: 254/256, green: 200/256, blue: 8/256, alpha: 1)
         UITabBar.appearance().tintColor = UIColor.black

@@ -95,7 +95,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ZdO-xG-C9B"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Home" id="bsL-7G-z0u"/>
+                    <navigationItem key="navigationItem" title="Home" id="bsL-7G-z0u">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="d7S-KY-17C"/>
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="Info" id="AnL-dS-YC0">
+                            <connections>
+                                <segue destination="NIf-e2-UgF" kind="show" id="qKp-57-GML"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="distance" destination="Mts-m0-d3e" id="Qfu-Gu-Fch"/>
                         <outlet property="object" destination="nRv-kx-3Su" id="6hv-Vy-boi"/>
@@ -105,6 +112,22 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1503" y="-321"/>
+        </scene>
+        <!--Info-->
+        <scene sceneID="WGv-Qx-RcQ">
+            <objects>
+                <viewController id="NIf-e2-UgF" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0V1-he-h8P">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="2pU-20-9dZ"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Info" id="LEz-ol-Uyz"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="w3K-dx-dZy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2255" y="-321"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -267,6 +290,7 @@
     </scenes>
     <resources>
         <image name="Home" width="72" height="72"/>
+        <image name="Info" width="72" height="72"/>
         <image name="Settings" width="72" height="72"/>
     </resources>
 </document>

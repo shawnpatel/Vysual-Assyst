@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA73A5B921CF55AE00A62BDE /* TODO.txt in Resources */ = {isa = PBXBuildFile; fileRef = CA73A5B821CF55AE00A62BDE /* TODO.txt */; };
 		CA760F7621C768BF00A75457 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA760F7521C768BF00A75457 /* AppDelegate.swift */; };
 		CA760F7821C768BF00A75457 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA760F7721C768BF00A75457 /* HomeViewController.swift */; };
 		CA760F7D21C768BF00A75457 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA760F7B21C768BF00A75457 /* Main.storyboard */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CA73A5B821CF55AE00A62BDE /* TODO.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = TODO.txt; sourceTree = "<group>"; };
 		CA760F7221C768BF00A75457 /* Vysual Assyst.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Vysual Assyst.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA760F7521C768BF00A75457 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CA760F7721C768BF00A75457 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 		CA760F7421C768BF00A75457 /* Vysual Assyst */ = {
 			isa = PBXGroup;
 			children = (
+				CA73A5B821CF55AE00A62BDE /* TODO.txt */,
 				CA760F7521C768BF00A75457 /* AppDelegate.swift */,
 				CA760F7721C768BF00A75457 /* HomeViewController.swift */,
 				CADD345421CBFB0D00633BF0 /* SettingsTableViewController.swift */,
@@ -144,6 +147,7 @@
 			files = (
 				CAC1F9D521CDB4ED0053BAD0 /* Beep.m4a in Resources */,
 				CA760F8221C768C200A75457 /* LaunchScreen.storyboard in Resources */,
+				CA73A5B921CF55AE00A62BDE /* TODO.txt in Resources */,
 				CAC1F9D821CDB7630053BAD0 /* Short_Beep.m4a in Resources */,
 				CA760F7F21C768C200A75457 /* Assets.xcassets in Resources */,
 				CA760F7D21C768BF00A75457 /* Main.storyboard in Resources */,
