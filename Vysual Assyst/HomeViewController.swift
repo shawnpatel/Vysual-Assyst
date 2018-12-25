@@ -17,6 +17,7 @@ class HomeViewController: UIViewController {
     
     @IBOutlet weak var sceneView: ARSCNView!
     @IBOutlet weak var object: UILabel!
+    @IBOutlet weak var crosshair: UIImageView!
     @IBOutlet weak var distance: UILabel!
     
     let synth = AVSpeechSynthesizer()
@@ -34,6 +35,8 @@ class HomeViewController: UIViewController {
         synth.delegate = self
         
         turnOffBeep = false
+        
+        crosshair.image = crosshair.image?.withRenderingMode(.alwaysTemplate)
         
         // Gesture Implementation
         let shortPressRecognizer = UITapGestureRecognizer(target: self, action: #selector(detectDistance(sender:)))
@@ -118,12 +121,15 @@ class HomeViewController: UIViewController {
         
         if distance != -1 {
             DispatchQueue.main.async {
+                self.crosshair.tintColor = UIColor.green
                 self.distance.text = String(distance) + " ft"
                 self.distance.isHidden = false
             }
         } else {
             DispatchQueue.main.async {
+                self.crosshair.tintColor = UIColor.red
                 self.distance.text = "Error"
+                self.distance.isHidden = false
             }
         }
         
@@ -187,9 +193,10 @@ class HomeViewController: UIViewController {
             
             return roundedDistance
         } else {
-            sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
+            // Remove 3D Text
+            /*sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
                 node.removeFromParentNode()
-            }
+            }*/
             
             return -1
         }
