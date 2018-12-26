@@ -24,19 +24,30 @@ class HomeViewController: UIViewController {
     
     var timer: Timer!
     var player: AVAudioPlayer?
+    var strokeTextAttributes: [NSAttributedString.Key : Any]!
     
     var turnOffBeep: Bool!
+    
+    var hitTestCoordinatesX: Float!
+    var hitTestCoordinatesY: Float!
+    var hitTestCoordinatesZ: Float!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         sceneView.autoenablesDefaultLighting = true
+        crosshair.image = crosshair.image?.withRenderingMode(.alwaysTemplate)
         
         synth.delegate = self
         
-        turnOffBeep = false
+        strokeTextAttributes = [
+            NSAttributedString.Key.strokeColor : UIColor.black,
+            NSAttributedString.Key.foregroundColor : UIColor.white,
+            NSAttributedString.Key.strokeWidth : -4.0,
+            NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 25)
+        ]
         
-        crosshair.image = crosshair.image?.withRenderingMode(.alwaysTemplate)
+        turnOffBeep = false
         
         // Gesture Implementation
         let shortPressRecognizer = UITapGestureRecognizer(target: self, action: #selector(detectDistance(sender:)))
@@ -60,10 +71,15 @@ class HomeViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
+        sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
+            node.removeFromParentNode()
+        }
+        
         sceneView.session.pause()
         timer.invalidate()
         
         object.isHidden = true
+        distance.isHidden = true
     }
     
     @objc func detectDistance(sender: UITapGestureRecognizer) {
@@ -100,8 +116,13 @@ class HomeViewController: UIViewController {
                 
                 self?.speak(text: item)
                 
-                self?.object.text = item
-                self?.object.isHidden = false
+                if self?.hitTestCoordinatesX != nil && self?.hitTestCoordinatesY != nil && self?.hitTestCoordinatesZ != nil {
+                    self?.create3DText(text: item, xPos: (self?.hitTestCoordinatesX)!, yPos: (self?.hitTestCoordinatesY)!, zPos: (self?.hitTestCoordinatesZ)!)
+                    self?.object.isHidden = true
+                } else {
+                    self?.object.attributedText = NSAttributedString(string: item, attributes: self?.strokeTextAttributes)
+                    self?.object.isHidden = false
+                }
             }
         }
         
@@ -122,13 +143,13 @@ class HomeViewController: UIViewController {
         if distance != -1 {
             DispatchQueue.main.async {
                 self.crosshair.tintColor = UIColor.green
-                self.distance.text = String(distance) + " ft"
+                self.distance.attributedText = NSAttributedString(string: String(distance) + " ft", attributes: self.strokeTextAttributes)
                 self.distance.isHidden = false
             }
         } else {
             DispatchQueue.main.async {
                 self.crosshair.tintColor = UIColor.red
-                self.distance.text = "Error"
+                self.distance.attributedText = NSAttributedString(string: "Error", attributes: self.strokeTextAttributes)
                 self.distance.isHidden = false
             }
         }
@@ -183,39 +204,31 @@ class HomeViewController: UIViewController {
         if let distance = hitTest.first?.distance {
             let roundedDistance = Float(round(100 * (distance * 3.28084)) / 100)
             
-            // Create 3D Text
-            /*let hitTestCoordinates = hitTest.first?.worldTransform.columns.3
-            let hitTestCoordinatesX = hitTestCoordinates?.x
-            let hitTestCoordinatesY = hitTestCoordinates?.y
-            let hitTestCoordinatesZ = hitTestCoordinates?.z
-            
-            create3DText(text: String(roundedDistance) + " ft", xPos: hitTestCoordinatesX!, yPos: hitTestCoordinatesY!, zPos: hitTestCoordinatesZ!)*/
+            let hitTestCoordinates = hitTest.first?.worldTransform.columns.3
+            hitTestCoordinatesX = hitTestCoordinates?.x
+            hitTestCoordinatesY = hitTestCoordinates?.y
+            hitTestCoordinatesZ = hitTestCoordinates?.z
             
             return roundedDistance
         } else {
-            // Remove 3D Text
-            /*sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
-                node.removeFromParentNode()
-            }*/
+            hitTestCoordinatesX = nil
+            hitTestCoordinatesY = nil
+            hitTestCoordinatesZ = nil
             
             return -1
         }
     }
     
     func create3DText(text: String, xPos: Float, yPos: Float, zPos: Float) {
-        sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
-            node.removeFromParentNode()
-        }
-        
-        let text = SCNText(string: text, extrusionDepth: 1)
-        text.font = UIFont.systemFont(ofSize: 13)
-        text.flatness = 0
-        text.firstMaterial?.diffuse.contents = UIColor.red
+        let ARText = SCNText(string: text, extrusionDepth: 1)
+        ARText.font = UIFont.systemFont(ofSize: 13)
+        ARText.flatness = 0
+        ARText.firstMaterial?.diffuse.contents = UIColor.red
         
         let node = SCNNode()
-        node.position = SCNVector3(x: xPos - 0.1, y: yPos, z: zPos)
+        node.position = SCNVector3(x: xPos - (0.017 * Float(text.count)), y: yPos, z: zPos)
         node.scale = SCNVector3(0.005, 0.005, 0.005)
-        node.geometry = text
+        node.geometry = ARText
         
         sceneView.scene.rootNode.addChildNode(node)
     }
@@ -233,6 +246,22 @@ class HomeViewController: UIViewController {
         turnOffBeep = true
         
         synth.speak(utterance)
+    }
+    
+    @IBAction func refresh(_ sender: UIBarButtonItem) {
+        // Wipe
+        sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
+            node.removeFromParentNode()
+        }
+        
+        sceneView.session.pause()
+        timer.invalidate()
+        
+        // Restore
+        let configuration = ARWorldTrackingConfiguration()
+        sceneView.session.run(configuration, options: .resetTracking)
+        
+        timer = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(verifyDistance), userInfo: nil, repeats: true)
     }
 }
 

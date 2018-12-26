@@ -1,3 +1,2 @@
-- Reset AR tracking when device rotates.
-- Figure out better UI for displaying object recognition text.
+- Rotate AR Text to the screen's POI.
 - Tutorial screens.
