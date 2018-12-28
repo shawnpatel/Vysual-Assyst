@@ -15,6 +15,7 @@ import AudioToolbox
 
 class HomeViewController: UIViewController {
     
+    @IBOutlet weak var info: UIBarButtonItem!
     @IBOutlet weak var sceneView: ARSCNView!
     @IBOutlet weak var object: UILabel!
     @IBOutlet weak var crosshair: UIImageView!
@@ -22,7 +23,8 @@ class HomeViewController: UIViewController {
     
     let synth = AVSpeechSynthesizer()
     
-    var timer: Timer!
+    var objectTimer: Timer!
+    var distanceTimer: Timer!
     var player: AVAudioPlayer?
     var strokeTextAttributes: [NSAttributedString.Key : Any]!
     
@@ -34,6 +36,8 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        info.accessibilityLabel = "Instructions"
         
         sceneView.autoenablesDefaultLighting = true
         crosshair.image = crosshair.image?.withRenderingMode(.alwaysTemplate)
@@ -50,11 +54,11 @@ class HomeViewController: UIViewController {
         turnOffBeep = false
         
         // Gesture Implementation
-        let shortPressRecognizer = UITapGestureRecognizer(target: self, action: #selector(detectDistance(sender:)))
+        /*let shortPressRecognizer = UITapGestureRecognizer(target: self, action: #selector(detectDistance(sender:)))
         sceneView.addGestureRecognizer(shortPressRecognizer)
         
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(detectObject(sender:)))
-        sceneView.addGestureRecognizer(longPressRecognizer)
+        sceneView.addGestureRecognizer(longPressRecognizer)*/
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -64,8 +68,9 @@ class HomeViewController: UIViewController {
         let configuration = ARWorldTrackingConfiguration()
         sceneView.session.run(configuration, options: .resetTracking)
         
-        // Initiate Timer to Update Distance
-        timer = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(verifyDistance), userInfo: nil, repeats: true)
+        // Initiate Timer to Update Distance & Object
+        objectTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(processObject), userInfo: nil, repeats: true)
+        distanceTimer = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(processDistance), userInfo: nil, repeats: true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -76,7 +81,8 @@ class HomeViewController: UIViewController {
         }
         
         sceneView.session.pause()
-        timer.invalidate()
+        objectTimer.invalidate()
+        distanceTimer.invalidate()
         
         object.isHidden = true
         distance.isHidden = true
@@ -100,43 +106,7 @@ class HomeViewController: UIViewController {
         }
     }
     
-    func analyze(image: UIImage) {
-        guard let model = try? VNCoreMLModel(for: MobileNet().model) else {
-            fatalError("Can't load MobileNet model.")
-        }
-        
-        let request = VNCoreMLRequest(model: model) { [weak self] request, error in
-            guard let results = request.results as? [VNClassificationObservation], let topResult = results.first else {
-                fatalError("Unexpected result type from VNCoreMLRequest.")
-            }
-            
-            DispatchQueue.main.async { [weak self] in
-                let items = topResult.identifier.components(separatedBy: ", ")
-                let item = items[0].capitalized
-                
-                self?.speak(text: item)
-                
-                if self?.hitTestCoordinatesX != nil && self?.hitTestCoordinatesY != nil && self?.hitTestCoordinatesZ != nil {
-                    self?.create3DText(text: item, xPos: (self?.hitTestCoordinatesX)!, yPos: (self?.hitTestCoordinatesY)!, zPos: (self?.hitTestCoordinatesZ)!)
-                    self?.object.isHidden = true
-                } else {
-                    self?.object.attributedText = NSAttributedString(string: item, attributes: self?.strokeTextAttributes)
-                    self?.object.isHidden = false
-                }
-            }
-        }
-        
-        let handler = VNImageRequestHandler(ciImage: CIImage(image: image)!)
-        DispatchQueue.global(qos: .userInteractive).async {
-            do {
-                try handler.perform([request])
-            } catch {
-                print(error)
-            }
-        }
-    }
-    
-    @objc func verifyDistance() {
+    @objc func processDistance() {
         let distance = getDistance()
         let maxDistance = UserDefaults.standard.float(forKey: "distanceAlert")
         
@@ -198,6 +168,12 @@ class HomeViewController: UIViewController {
         }
     }
     
+    @objc func processObject() {
+        let image = sceneView.snapshot()
+        
+        analyze(image: image)
+    }
+    
     func getDistance() -> Float {
         let hitTest = sceneView.hitTest(sceneView.center, types: [.existingPlaneUsingExtent, .featurePoint])
         
@@ -219,18 +195,69 @@ class HomeViewController: UIViewController {
         }
     }
     
+    func analyze(image: UIImage) {
+        guard let model = try? VNCoreMLModel(for: MobileNet().model) else {
+            fatalError("Can't load MobileNet model.")
+        }
+        
+        let request = VNCoreMLRequest(model: model) { [weak self] request, error in
+            guard let results = request.results as? [VNClassificationObservation], let topResult = results.first else {
+                fatalError("Unexpected result type from VNCoreMLRequest.")
+            }
+            
+            DispatchQueue.main.async { [weak self] in
+                let items = topResult.identifier.components(separatedBy: ", ")
+                let item = items[0].capitalized
+                
+                //self?.speak(text: item)
+                
+                /*if self?.hitTestCoordinatesX != nil && self?.hitTestCoordinatesY != nil && self?.hitTestCoordinatesZ != nil {
+                    self?.create3DText(text: item, xPos: (self?.hitTestCoordinatesX)!, yPos: (self?.hitTestCoordinatesY)!, zPos: (self?.hitTestCoordinatesZ)!)
+                    self?.object.isHidden = true
+                } else {
+                    self?.object.attributedText = NSAttributedString(string: item, attributes: self?.strokeTextAttributes)
+                    self?.object.isHidden = false
+                }*/
+                
+                self?.object.attributedText = NSAttributedString(string: item, attributes: self?.strokeTextAttributes)
+                self?.object.isHidden = false
+            }
+        }
+        
+        let handler = VNImageRequestHandler(ciImage: CIImage(image: image)!)
+        DispatchQueue.global(qos: .userInteractive).async {
+            do {
+                try handler.perform([request])
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
     func create3DText(text: String, xPos: Float, yPos: Float, zPos: Float) {
         let ARText = SCNText(string: text, extrusionDepth: 1)
         ARText.font = UIFont.systemFont(ofSize: 13)
         ARText.flatness = 0
-        ARText.firstMaterial?.diffuse.contents = UIColor.red
+        ARText.firstMaterial?.diffuse.contents = UIColor.green
         
         let node = SCNNode()
-        node.position = SCNVector3(x: xPos - (0.017 * Float(text.count)), y: yPos, z: zPos)
+        node.pivot = SCNMatrix4Rotate(node.pivot, Float.pi, 0, 1, 0)
+        node.position = SCNVector3(x: xPos, y: yPos, z: zPos)
         node.scale = SCNVector3(0.005, 0.005, 0.005)
         node.geometry = ARText
         
-        sceneView.scene.rootNode.addChildNode(node)
+        let parentNode = SCNNode()
+        parentNode.position = SCNVector3(x: xPos - 0.1, y: yPos, z: zPos)
+        parentNode.addChildNode(node)
+        
+        let cameraNode = SCNNode()
+        cameraNode.camera = SCNCamera()
+        
+        let constraint = SCNLookAtConstraint(target: cameraNode)
+        constraint.isGimbalLockEnabled = true
+        node.constraints = [constraint]
+        
+        sceneView.scene.rootNode.addChildNode(parentNode)
     }
     
     func speak(text: String) {
@@ -255,13 +282,15 @@ class HomeViewController: UIViewController {
         }
         
         sceneView.session.pause()
-        timer.invalidate()
+        objectTimer.invalidate()
+        distanceTimer.invalidate()
         
         // Restore
         let configuration = ARWorldTrackingConfiguration()
         sceneView.session.run(configuration, options: .resetTracking)
         
-        timer = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(verifyDistance), userInfo: nil, repeats: true)
+        objectTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(processObject), userInfo: nil, repeats: true)
+        distanceTimer = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(processDistance), userInfo: nil, repeats: true)
     }
 }
 

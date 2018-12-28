@@ -23,6 +23,7 @@
                             </arscnView>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Object" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aL8-dB-yzF">
                                 <rect key="frame" x="5" y="93" width="365" height="30"/>
+                                <accessibility key="accessibilityConfiguration" hint="Object"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -33,6 +34,7 @@
                             </imageView>
                             <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mts-m0-d3e">
                                 <rect key="frame" x="5" y="694" width="365" height="30"/>
+                                <accessibility key="accessibilityConfiguration" hint="Distance"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -79,6 +81,7 @@
                     <connections>
                         <outlet property="crosshair" destination="rA5-kW-Qhe" id="4Ch-nI-wDs"/>
                         <outlet property="distance" destination="Mts-m0-d3e" id="Qfu-Gu-Fch"/>
+                        <outlet property="info" destination="AnL-dS-YC0" id="kg9-4W-dN2"/>
                         <outlet property="object" destination="aL8-dB-yzF" id="ON9-wG-ahr"/>
                         <outlet property="sceneView" destination="TXg-H1-OSf" id="de6-Ia-bhe"/>
                     </connections>
@@ -87,7 +90,7 @@
             </objects>
             <point key="canvasLocation" x="1503" y="-321"/>
         </scene>
-        <!--Info-->
+        <!--Instructions-->
         <scene sceneID="WGv-Qx-RcQ">
             <objects>
                 <viewController id="NIf-e2-UgF" sceneMemberID="viewController">
@@ -97,7 +100,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="2pU-20-9dZ"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Info" id="LEz-ol-Uyz"/>
+                    <navigationItem key="navigationItem" title="Instructions" id="LEz-ol-Uyz"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w3K-dx-dZy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

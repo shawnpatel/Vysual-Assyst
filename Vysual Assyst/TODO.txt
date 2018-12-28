@@ -1,2 +1,2 @@
-- Rotate AR Text to the screen's POI.
+- Center text x-axis.
 - Tutorial screens.
