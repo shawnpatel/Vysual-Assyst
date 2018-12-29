@@ -1,2 +1,1 @@
-- Center text x-axis.
-- Tutorial screens.
+

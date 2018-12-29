@@ -110,19 +110,11 @@ class HomeViewController: UIViewController {
                 if UserDefaults.standard.bool(forKey: "haptics") {
                     AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
                 }
-            } else if feedbackSupportLevel == 1 {
-                // == iPhone 6s
+            } else if feedbackSupportLevel >= 1 {
+                // >= iPhone 6s
                 
                 if UserDefaults.standard.bool(forKey: "haptics") {
                     AudioServicesPlaySystemSound(1520)
-                }
-            } else if feedbackSupportLevel == 2 {
-                // >= iPhone 7
-                
-                if UserDefaults.standard.bool(forKey: "haptics") {
-                    let impactGenerator = UIImpactFeedbackGenerator(style: .medium)
-                    impactGenerator.prepare()
-                    impactGenerator.impactOccurred()
                 }
             }
             
