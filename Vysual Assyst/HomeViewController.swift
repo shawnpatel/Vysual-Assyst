@@ -18,6 +18,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var info: UIBarButtonItem!
     @IBOutlet weak var sceneView: ARSCNView!
     @IBOutlet weak var object: UILabel!
+    @IBOutlet weak var scene: UILabel!
     @IBOutlet weak var crosshair: UIImageView!
     @IBOutlet weak var distance: UILabel!
     
@@ -52,13 +53,6 @@ class HomeViewController: UIViewController {
         ]
         
         turnOffBeep = false
-        
-        // Gesture Implementation
-        /*let shortPressRecognizer = UITapGestureRecognizer(target: self, action: #selector(detectDistance(sender:)))
-        sceneView.addGestureRecognizer(shortPressRecognizer)
-        
-        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(detectObject(sender:)))
-        sceneView.addGestureRecognizer(longPressRecognizer)*/
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -85,25 +79,8 @@ class HomeViewController: UIViewController {
         distanceTimer.invalidate()
         
         object.isHidden = true
+        scene.isHidden = true
         distance.isHidden = true
-    }
-    
-    @objc func detectDistance(sender: UITapGestureRecognizer) {
-        let distance = getDistance()
-        
-        if distance != -1 {
-            speak(text: String(distance))
-        } else {
-            AudioServicesPlaySystemSound(1521)
-        }
-    }
-    
-    @objc func detectObject(sender: UILongPressGestureRecognizer) {
-        let image = sceneView.snapshot()
-        
-        if sender.state == UIGestureRecognizer.State.began {
-            analyze(image: image)
-        }
     }
     
     @objc func processDistance() {
@@ -171,7 +148,8 @@ class HomeViewController: UIViewController {
     @objc func processObject() {
         let image = sceneView.snapshot()
         
-        analyze(image: image)
+        analyze(object: image)
+        analyze(scene: image)
     }
     
     func getDistance() -> Float {
@@ -195,7 +173,7 @@ class HomeViewController: UIViewController {
         }
     }
     
-    func analyze(image: UIImage) {
+    func analyze(object: UIImage) {
         guard let model = try? VNCoreMLModel(for: MobileNet().model) else {
             fatalError("Can't load MobileNet model.")
         }
@@ -209,22 +187,41 @@ class HomeViewController: UIViewController {
                 let items = topResult.identifier.components(separatedBy: ", ")
                 let item = items[0].capitalized
                 
-                //self?.speak(text: item)
-                
-                /*if self?.hitTestCoordinatesX != nil && self?.hitTestCoordinatesY != nil && self?.hitTestCoordinatesZ != nil {
-                    self?.create3DText(text: item, xPos: (self?.hitTestCoordinatesX)!, yPos: (self?.hitTestCoordinatesY)!, zPos: (self?.hitTestCoordinatesZ)!)
-                    self?.object.isHidden = true
-                } else {
-                    self?.object.attributedText = NSAttributedString(string: item, attributes: self?.strokeTextAttributes)
-                    self?.object.isHidden = false
-                }*/
-                
                 self?.object.attributedText = NSAttributedString(string: item, attributes: self?.strokeTextAttributes)
                 self?.object.isHidden = false
             }
         }
         
-        let handler = VNImageRequestHandler(ciImage: CIImage(image: image)!)
+        let handler = VNImageRequestHandler(ciImage: CIImage(image: object)!)
+        DispatchQueue.global(qos: .userInteractive).async {
+            do {
+                try handler.perform([request])
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    func analyze(scene: UIImage) {
+        guard let model = try? VNCoreMLModel(for: GoogLeNetPlaces().model) else {
+            fatalError("Can't load MobileNet model.")
+        }
+        
+        let request = VNCoreMLRequest(model: model) { [weak self] request, error in
+            guard let results = request.results as? [VNClassificationObservation], let topResult = results.first else {
+                fatalError("Unexpected result type from VNCoreMLRequest.")
+            }
+            
+            DispatchQueue.main.async { [weak self] in
+                let items = topResult.identifier.components(separatedBy: ", ")
+                let item = items[0].capitalized.replacingOccurrences(of: "_", with: " ")
+                
+                self?.scene.attributedText = NSAttributedString(string: item, attributes: self?.strokeTextAttributes)
+                self?.scene.isHidden = false
+            }
+        }
+        
+        let handler = VNImageRequestHandler(ciImage: CIImage(image: scene)!)
         DispatchQueue.global(qos: .userInteractive).async {
             do {
                 try handler.perform([request])

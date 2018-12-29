@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CA73A5B921CF55AE00A62BDE /* TODO.txt in Resources */ = {isa = PBXBuildFile; fileRef = CA73A5B821CF55AE00A62BDE /* TODO.txt */; };
+		CA7474BC21D739F400C717A8 /* GoogLeNetPlaces.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = CA7474BB21D739F400C717A8 /* GoogLeNetPlaces.mlmodel */; };
 		CA760F7621C768BF00A75457 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA760F7521C768BF00A75457 /* AppDelegate.swift */; };
 		CA760F7821C768BF00A75457 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA760F7721C768BF00A75457 /* HomeViewController.swift */; };
 		CA760F7D21C768BF00A75457 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA760F7B21C768BF00A75457 /* Main.storyboard */; };
@@ -21,6 +22,7 @@
 
 /* Begin PBXFileReference section */
 		CA73A5B821CF55AE00A62BDE /* TODO.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = TODO.txt; sourceTree = "<group>"; };
+		CA7474BB21D739F400C717A8 /* GoogLeNetPlaces.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = GoogLeNetPlaces.mlmodel; sourceTree = "<group>"; };
 		CA760F7221C768BF00A75457 /* Vysual Assyst.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Vysual Assyst.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA760F7521C768BF00A75457 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CA760F7721C768BF00A75457 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 				CA760F8021C768C200A75457 /* LaunchScreen.storyboard */,
 				CA760F7B21C768BF00A75457 /* Main.storyboard */,
 				CAB94ECC21CDF157004A74E5 /* MobileNet.mlmodel */,
+				CA7474BB21D739F400C717A8 /* GoogLeNetPlaces.mlmodel */,
 				CA760F7E21C768C200A75457 /* Assets.xcassets */,
 				CAC1F9D621CDB4F40053BAD0 /* Sounds */,
 				CA760F8321C768C200A75457 /* Info.plist */,
@@ -162,6 +165,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CAB94ECD21CDF157004A74E5 /* MobileNet.mlmodel in Sources */,
+				CA7474BC21D739F400C717A8 /* GoogLeNetPlaces.mlmodel in Sources */,
 				CA760F7621C768BF00A75457 /* AppDelegate.swift in Sources */,
 				CA760F7821C768BF00A75457 /* HomeViewController.swift in Sources */,
 				CADD345521CBFB0D00633BF0 /* SettingsTableViewController.swift in Sources */,
