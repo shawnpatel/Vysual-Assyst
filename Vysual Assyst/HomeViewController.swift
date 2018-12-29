@@ -18,7 +18,9 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var info: UIBarButtonItem!
     @IBOutlet weak var sceneView: ARSCNView!
     @IBOutlet weak var object: UILabel!
+    @IBOutlet weak var objectLabel: UILabel!
     @IBOutlet weak var scene: UILabel!
+    @IBOutlet weak var sceneLabel: UILabel!
     @IBOutlet weak var crosshair: UIImageView!
     @IBOutlet weak var distance: UILabel!
     
@@ -79,7 +81,9 @@ class HomeViewController: UIViewController {
         distanceTimer.invalidate()
         
         object.isHidden = true
+        objectLabel.isHidden = true
         scene.isHidden = true
+        sceneLabel.isHidden = true
         distance.isHidden = true
     }
     
@@ -181,6 +185,7 @@ class HomeViewController: UIViewController {
                 
                 self?.object.attributedText = NSAttributedString(string: item, attributes: self?.strokeTextAttributes)
                 self?.object.isHidden = false
+                self?.objectLabel.isHidden = false
             }
         }
         
@@ -210,6 +215,7 @@ class HomeViewController: UIViewController {
                 
                 self?.scene.attributedText = NSAttributedString(string: item, attributes: self?.strokeTextAttributes)
                 self?.scene.isHidden = false
+                self?.sceneLabel.isHidden = false
             }
         }
         

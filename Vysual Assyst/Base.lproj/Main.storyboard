@@ -56,6 +56,29 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="dvY-fE-uk7">
+                                <rect key="frame" x="5" y="93" width="365" height="0.0"/>
+                                <subviews>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Object" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tuG-aB-546">
+                                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="15.666666666666666"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <bool key="isElement" value="NO"/>
+                                        </accessibility>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scene" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xge-ao-CZU">
+                                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="15.666666666666666"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <bool key="isElement" value="NO"/>
+                                        </accessibility>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -63,6 +86,7 @@
                             <constraint firstItem="ZdO-xG-C9B" firstAttribute="trailing" secondItem="rA5-kW-Qhe" secondAttribute="trailing" constant="5" id="5It-4g-E5n"/>
                             <constraint firstItem="ZdO-xG-C9B" firstAttribute="bottom" secondItem="TXg-H1-OSf" secondAttribute="bottom" id="Chq-7x-Nfw"/>
                             <constraint firstItem="ZdO-xG-C9B" firstAttribute="trailing" secondItem="TXg-H1-OSf" secondAttribute="trailing" id="DXn-mY-3no"/>
+                            <constraint firstItem="dvY-fE-uk7" firstAttribute="leading" secondItem="ZdO-xG-C9B" secondAttribute="leading" constant="5" id="FQq-OL-Foh"/>
                             <constraint firstItem="ZdO-xG-C9B" firstAttribute="trailing" secondItem="k8a-U7-tF4" secondAttribute="trailing" constant="5" id="GN7-Rc-ANU"/>
                             <constraint firstItem="TXg-H1-OSf" firstAttribute="top" secondItem="ZdO-xG-C9B" secondAttribute="top" id="Sy6-hd-AMA"/>
                             <constraint firstItem="rA5-kW-Qhe" firstAttribute="centerX" secondItem="Saw-pN-ABH" secondAttribute="centerX" id="T4I-I1-7hE"/>
@@ -72,8 +96,10 @@
                             <constraint firstItem="rA5-kW-Qhe" firstAttribute="centerY" secondItem="Saw-pN-ABH" secondAttribute="centerY" id="fak-CO-5E6"/>
                             <constraint firstItem="ZdO-xG-C9B" firstAttribute="trailing" secondItem="Mts-m0-d3e" secondAttribute="trailing" constant="5" id="gOe-95-iZF"/>
                             <constraint firstAttribute="bottomMargin" secondItem="Mts-m0-d3e" secondAttribute="bottom" constant="5" id="icH-qU-6GH"/>
+                            <constraint firstItem="dvY-fE-uk7" firstAttribute="top" secondItem="k8a-U7-tF4" secondAttribute="bottom" id="lNP-dG-uuL"/>
                             <constraint firstItem="k8a-U7-tF4" firstAttribute="leading" secondItem="ZdO-xG-C9B" secondAttribute="leading" constant="5" id="lke-hL-jmg"/>
                             <constraint firstItem="rA5-kW-Qhe" firstAttribute="leading" secondItem="ZdO-xG-C9B" secondAttribute="leading" constant="5" id="r95-uw-od8"/>
+                            <constraint firstItem="ZdO-xG-C9B" firstAttribute="trailing" secondItem="dvY-fE-uk7" secondAttribute="trailing" constant="5" id="yg6-vh-SMm"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ZdO-xG-C9B"/>
                     </view>
@@ -95,7 +121,9 @@
                         <outlet property="distance" destination="Mts-m0-d3e" id="Qfu-Gu-Fch"/>
                         <outlet property="info" destination="AnL-dS-YC0" id="kg9-4W-dN2"/>
                         <outlet property="object" destination="aL8-dB-yzF" id="ON9-wG-ahr"/>
+                        <outlet property="objectLabel" destination="tuG-aB-546" id="pbO-Hd-Fl5"/>
                         <outlet property="scene" destination="xGM-da-sZE" id="Ok3-hi-ti6"/>
+                        <outlet property="sceneLabel" destination="xge-ao-CZU" id="Oo9-k2-quY"/>
                         <outlet property="sceneView" destination="TXg-H1-OSf" id="de6-Ia-bhe"/>
                     </connections>
                 </viewController>
@@ -114,7 +142,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dTn-e3-jAw">
                                 <rect key="frame" x="5" y="93" width="365" height="631"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <mutableString key="text">Vysual Assyst is fully compatible with VoiceOver. Simply swipe through the three labels to get object analysis, scene analysis, and distance detection. The distance at which the warning is activated can be changed in the settings menu. For the most accurate results, ensure sufficient lighting, the camera is in focus, and background artifacts are limited.  Object and scene analysis is powered by Apple's Core ML and Vision frameworks. Distance detection is powered by Apple's ARKit framework.</mutableString>
+                                <string key="text">Vysual Assyst is fully compatible with VoiceOver. Simply swipe through the three labels to get object analysis, scene analysis, and distance detection. The distance at which the warning is activated can be changed in the settings menu. For the most accurate results, ensure sufficient lighting, the camera is in focus, and background artifacts are limited.  Object and scene analysis is powered by Apple's Core ML and Vision frameworks. Distance detection is powered by Apple's ARKit framework.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
