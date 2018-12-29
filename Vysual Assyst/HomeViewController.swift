@@ -67,6 +67,17 @@ class HomeViewController: UIViewController {
         // Initiate Timer to Update Distance & Object
         imageTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(processImage), userInfo: nil, repeats: true)
         distanceTimer = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(processDistance), userInfo: nil, repeats: true)
+        
+        // Check for Camera Authorization
+        if AVCaptureDevice.authorizationStatus(for: .video) !=  .authorized {
+            let alert = UIAlertController(title: "Camera Disabled", message: "Vysual Assyst is unable to function without access to the camera. Would you like to enable the camera permission in settings?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                let settingsUrl = URL(string: UIApplication.openSettingsURLString)!
+                UIApplication.shared.open(settingsUrl)
+            }))
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
