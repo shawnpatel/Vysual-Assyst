@@ -111,7 +111,7 @@ class HomeViewController: UIViewController {
                     AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
                 }
             } else if feedbackSupportLevel == 1 {
-                // = iPhone 6s
+                // == iPhone 6s
                 
                 if UserDefaults.standard.bool(forKey: "haptics") {
                     AudioServicesPlaySystemSound(1520)

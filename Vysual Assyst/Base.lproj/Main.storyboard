@@ -31,7 +31,7 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scene" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="xGM-da-sZE">
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scene" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xGM-da-sZE">
                                         <rect key="frame" x="0.0" y="0.0" width="0.0" height="30"/>
                                         <accessibility key="accessibilityConfiguration" hint="Scene"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
@@ -110,7 +110,22 @@
                     <view key="view" contentMode="scaleToFill" id="0V1-he-h8P">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dTn-e3-jAw">
+                                <rect key="frame" x="5" y="93" width="365" height="631"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <mutableString key="text">Vysual Assyst is fully compatible with VoiceOver. Simply swipe through the three labels to get object analysis, scene analysis, and distance detection. The distance at which the warning is activated can be changed in the settings menu. For the most accurate results, ensure sufficient lighting, the camera is in focus, and background artifacts are limited.  Object and scene analysis is powered by Apple's Core ML and Vision frameworks. Distance detection is powered by Apple's ARKit framework.</mutableString>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="dTn-e3-jAw" firstAttribute="leading" secondItem="2pU-20-9dZ" secondAttribute="leading" constant="5" id="7Fh-UK-35d"/>
+                            <constraint firstItem="dTn-e3-jAw" firstAttribute="top" secondItem="2pU-20-9dZ" secondAttribute="top" constant="5" id="U8k-a8-EzJ"/>
+                            <constraint firstItem="2pU-20-9dZ" firstAttribute="bottom" secondItem="dTn-e3-jAw" secondAttribute="bottom" constant="5" id="iPo-cN-3mi"/>
+                            <constraint firstItem="2pU-20-9dZ" firstAttribute="trailing" secondItem="dTn-e3-jAw" secondAttribute="trailing" constant="5" id="sZV-SO-bc3"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="2pU-20-9dZ"/>
                     </view>
                     <navigationItem key="navigationItem" title="Instructions" id="LEz-ol-Uyz"/>
@@ -239,14 +254,25 @@
                                             <rect key="frame" x="25" y="5" width="325" height="39.666666666666664"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Switch" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0DE-yG-OHw">
-                                                    <rect key="frame" x="0.0" y="0.0" width="276" height="39.666666666666664"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="274" height="39.666666666666664"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="La4-Kb-CRg">
-                                                    <rect key="frame" x="276" y="0.0" width="51" height="39.666666666666664"/>
-                                                </switch>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hLp-VO-7Ea">
+                                                    <rect key="frame" x="274" y="0.0" width="51" height="39.666666666666664"/>
+                                                    <subviews>
+                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="La4-Kb-CRg">
+                                                            <rect key="frame" x="1" y="4.3333333333333357" width="51" height="31"/>
+                                                        </switch>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="51" id="2eO-fw-tep"/>
+                                                        <constraint firstItem="La4-Kb-CRg" firstAttribute="centerX" secondItem="hLp-VO-7Ea" secondAttribute="centerX" id="JUK-MK-tT3"/>
+                                                        <constraint firstItem="La4-Kb-CRg" firstAttribute="centerY" secondItem="hLp-VO-7Ea" secondAttribute="centerY" id="ixP-VG-eNH"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                         </stackView>
                                     </subviews>
