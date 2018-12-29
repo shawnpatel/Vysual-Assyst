@@ -26,7 +26,7 @@ class HomeViewController: UIViewController {
     
     let synth = AVSpeechSynthesizer()
     
-    var objectTimer: Timer!
+    var imageTimer: Timer!
     var distanceTimer: Timer!
     var player: AVAudioPlayer?
     var strokeTextAttributes: [NSAttributedString.Key : Any]!
@@ -65,7 +65,7 @@ class HomeViewController: UIViewController {
         sceneView.session.run(configuration, options: .resetTracking)
         
         // Initiate Timer to Update Distance & Object
-        objectTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(processObject), userInfo: nil, repeats: true)
+        imageTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(processImage), userInfo: nil, repeats: true)
         distanceTimer = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(processDistance), userInfo: nil, repeats: true)
     }
     
@@ -77,7 +77,7 @@ class HomeViewController: UIViewController {
         }
         
         sceneView.session.pause()
-        objectTimer.invalidate()
+        imageTimer.invalidate()
         distanceTimer.invalidate()
         
         object.isHidden = true
@@ -141,7 +141,7 @@ class HomeViewController: UIViewController {
         }
     }
     
-    @objc func processObject() {
+    @objc func processImage() {
         let image = sceneView.snapshot()
         
         analyze(object: image)
@@ -277,14 +277,14 @@ class HomeViewController: UIViewController {
         }
         
         sceneView.session.pause()
-        objectTimer.invalidate()
+        imageTimer.invalidate()
         distanceTimer.invalidate()
         
         // Restore
         let configuration = ARWorldTrackingConfiguration()
         sceneView.session.run(configuration, options: .resetTracking)
         
-        objectTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(processObject), userInfo: nil, repeats: true)
+        imageTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(processImage), userInfo: nil, repeats: true)
         distanceTimer = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(processDistance), userInfo: nil, repeats: true)
     }
 }
