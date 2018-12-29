@@ -29,7 +29,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UserDefaults.standard.set(true, forKey: "haptics")
             UserDefaults.standard.set(false, forKey: "sound")
             
-            firstLaunch = false
             UserDefaults.standard.set(firstLaunch, forKey: "isFirstLaunch")
         }
         
