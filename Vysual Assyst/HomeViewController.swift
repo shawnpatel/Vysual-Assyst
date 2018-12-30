@@ -87,10 +87,6 @@ class HomeViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
-            node.removeFromParentNode()
-        }
-        
         sceneView.session.pause()
         imageTimer.invalidate()
         distanceTimer.invalidate()
@@ -125,13 +121,11 @@ class HomeViewController: UIViewController {
             
             if feedbackSupportLevel == 0 {
                 // <= iPhone 6
-                
                 if UserDefaults.standard.bool(forKey: "haptics") {
                     AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
                 }
             } else if feedbackSupportLevel >= 1 {
                 // >= iPhone 6s
-                
                 if UserDefaults.standard.bool(forKey: "haptics") {
                     AudioServicesPlaySystemSound(1520)
                 }
@@ -287,10 +281,6 @@ class HomeViewController: UIViewController {
     
     @IBAction func refresh(_ sender: UIBarButtonItem) {
         // Wipe
-        sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
-            node.removeFromParentNode()
-        }
-        
         sceneView.session.pause()
         imageTimer.invalidate()
         distanceTimer.invalidate()
